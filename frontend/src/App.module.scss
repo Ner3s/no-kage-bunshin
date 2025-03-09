@@ -16,9 +16,13 @@
 }
 
 .result {
-  height: 20px;
-  line-height: 20px;
-  margin: 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .input-box .btn {
@@ -57,3 +61,4 @@
   border: none;
   background-color: rgba(255, 255, 255, 1);
 }
+

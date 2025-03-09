@@ -1,41 +1,59 @@
 import { useState } from 'react';
 
-import { Greet } from '../wailsjs/go/main/App';
+import { ListDirectories } from '../wailsjs/go/main/App';
 import AppStyles from './App.module.scss';
-import logo from './assets/images/logo-universal.png';
+interface IFormData {
+  path: string;
+}
 
 function App() {
-  const [resultText, setResultText] = useState(
-    'Please enter your name below 👇'
-  );
-  const [name, setName] = useState('');
-  const updateName = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setName(e.target.value);
-  const updateResultText = (result: string) => setResultText(result);
+  const [resultText, setResultText] = useState<string[]>([]);
 
-  function greet() {
-    Greet(name).then(updateResultText);
+  function getPath(path: string) {
+    return ListDirectories(path);
+  }
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const dataJson = Object.fromEntries(formData.entries());
+
+    const result: IFormData = {
+      path: (dataJson.path as string) ?? ''
+    };
+
+    if (!result.path) {
+      alert('O campo de texto não pode estar vazio');
+      return;
+    }
+
+    getPath(result.path)
+      .then((resultDir) => {
+        console.log([...resultDir]);
+        setResultText([...resultDir]);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
   return (
     <div className={AppStyles.app}>
-      <img src={logo} className={AppStyles.logo} alt="logo" />
       <div id="result" className={AppStyles.result}>
-        {resultText}
+        {resultText.map((text) => (
+          <p key={text}>{text}</p>
+        ))}
       </div>
-      <div id="input" className={AppStyles['input-box']}>
+      <form onSubmit={onSubmit}>
         <input
-          id="name"
+          id="path"
           className={AppStyles.input}
-          onChange={updateName}
           autoComplete="off"
-          name="input"
+          name="path"
           type="text"
         />
-        <button className={AppStyles.btn} onClick={greet}>
-          Greet
-        </button>
-      </div>
+        <button className={AppStyles.btn}>List Directories</button>
+      </form>
     </div>
   );
 }
