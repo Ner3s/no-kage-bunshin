@@ -45,6 +45,28 @@ function App() {
         </button>
       </section>
 
+      <section className={AppStyles.table}>
+        <section className={AppStyles.tableHeader}>
+          <div> # </div>
+          <div>Folder</div>
+          <div>Filename</div>
+          <div>Size</div>
+          <div>Actions</div>
+        </section>
+        <section className={AppStyles.tableContainer}>
+          <div>
+            <input type="checkbox" name="checkbox" />
+          </div>
+          <div>Document</div>
+          <div>File-1</div>
+          <div>2 mb</div>
+          <div>
+            <span>Edit</span>
+            <span>Delete</span>
+          </div>
+        </section>
+      </section>
+
       <div id="result" className={AppStyles.result}>
         {resultText.map((text) => (
           <p key={text}>{text}</p>

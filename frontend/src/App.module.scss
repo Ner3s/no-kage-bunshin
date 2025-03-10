@@ -31,3 +31,19 @@
     }
   }
 }
+
+.table {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+
+  .tableHeader  {
+    display: grid;
+    grid-template-columns: 2rem 16rem 1fr 8rem 16rem;
+  }
+
+  .tableContainer {
+    display: grid;
+    grid-template-columns: 2rem 16rem 1fr 8rem 16rem;
+  }
+}
