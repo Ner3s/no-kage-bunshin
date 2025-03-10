@@ -1,9 +1,9 @@
 package main
 
 import (
-	"clone-detect/backend/services"
 	"context"
 	"fmt"
+	"no-kage-bunshin/backend/services"
 )
 
 // App struct
@@ -27,6 +27,6 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) ListDirectories(path string) ([]string, error) {
-	return services.ListDirectories(path)
+func (a *App) SelectFolder() (string, error) {
+  return services.SelectFolder(a.ctx)
 }

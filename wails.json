@@ -1,13 +1,13 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "clone-detect",
-  "outputfilename": "clone-detect",
+  "name": "no-kage-bunshin",
+  "outputfilename": "no-kage-bunshin",
   "frontend:install": "npm install",
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
   "author": {
     "name": "Alan Neres",
-    "email": "alanneres10@hotmail.com"
+    "email": "alanner3s.dev@gmail.com"
   }
 }
