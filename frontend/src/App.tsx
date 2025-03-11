@@ -1,34 +1,28 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+
+import { services } from 'wailsjs/go/models';
 
 import Checkbox from '@/components/checkbox';
 
-import { SelectFolder } from '../wailsjs/go/main/App';
+import { SelectFolder, ListFiles } from '../wailsjs/go/main/App';
 import AppStyles from './App.module.scss';
-interface IFormData {
-  path: string;
-}
 
 function App() {
-  const [resultText, setResultText] = useState<string[]>([]);
-
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const dataJson = Object.fromEntries(formData.entries());
-
-    const result: IFormData = {
-      path: (dataJson.path as string) ?? ''
-    };
-
-    if (!result.path) {
-      alert('O campo de texto não pode estar vazio');
-      return;
-    }
-  }
+  const [folderSelected, setFolder] = useState<string>('');
+  const [fileList, setFileList] = useState<services.FileInfo[]>([]);
 
   async function onSelectDirectory() {
     try {
       const result = await SelectFolder();
+
+      if (!result) {
+        return;
+      }
+
+      setFolder(result);
+
+      const fileList = await ListFiles(result);
+      setFileList(fileList);
     } catch (error) {
       console.error(error);
     }
@@ -47,6 +41,11 @@ function App() {
         </button>
       </section>
 
+      <section>
+        <div>filters</div>
+        <input type="search" placeholder="Search for filename" />
+      </section>
+
       <section className={AppStyles.table}>
         <section className={AppStyles.tableHeader}>
           <div></div>
@@ -56,26 +55,26 @@ function App() {
           <div>Actions</div>
         </section>
         <section className={AppStyles.tableContainer}>
-          <div>
-            <input type="checkbox" name="checkbox" />
-          </div>
-          <div>Document</div>
-          <div>
-            <Checkbox label={'teste'} />
-          </div>
-          <div>2 mb</div>
-          <div>
-            <span>Edit</span>
-            <span>Delete</span>
-          </div>
+          {fileList
+            .filter((el) => !el.isDir)
+            .map((data) => {
+              return (
+                <Fragment key={data.path}>
+                  <div>
+                    <Checkbox />
+                  </div>
+                  <div>{data.folderPath}</div>
+                  <div>{data.filename}</div>
+                  <div>{data.sizeHuman}</div>
+                  <div>
+                    <span>Edit</span>
+                    <span>Delete</span>
+                  </div>
+                </Fragment>
+              );
+            })}
         </section>
       </section>
-
-      <div id="result" className={AppStyles.result}>
-        {resultText.map((text) => (
-          <p key={text}>{text}</p>
-        ))}
-      </div>
     </main>
   );
 }

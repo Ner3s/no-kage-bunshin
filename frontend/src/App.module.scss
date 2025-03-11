@@ -37,13 +37,9 @@
   flex-direction: column;
   margin: 1rem;
 
-  .tableHeader  {
-    display: grid;
-    grid-template-columns: 2rem 16rem 1fr 8rem 16rem;
-  }
-
+  .tableHeader,
   .tableContainer {
     display: grid;
-    grid-template-columns: 2rem 16rem 1fr 8rem 16rem;
+    grid-template-columns: 4rem 16rem 1fr 8rem 16rem;
   }
 }
