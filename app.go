@@ -24,3 +24,7 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) SelectFolder() (string, error) {
   return services.SelectFolder(a.ctx)
 }
+
+func (a *App) ListFiles(folderPath string) ([]services.FileInfo, error){
+  return services.ListFiles(folderPath)
+}
