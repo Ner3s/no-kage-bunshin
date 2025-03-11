@@ -1,5 +1,5 @@
 html {
-  background-color: rgba(27, 38, 54, 1);
+  background-color: var(--bg-color);
   text-align: center;
   color: white;
 }
@@ -20,6 +20,14 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body, button, input, label, textarea {
+  font-size: 1.6rem;
 }
 
 @font-face {

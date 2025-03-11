@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Checkbox from '@/components/checkbox';
+
 import { SelectFolder } from '../wailsjs/go/main/App';
 import AppStyles from './App.module.scss';
 interface IFormData {
@@ -37,7 +39,7 @@ function App() {
       <section className={AppStyles.header}>
         <div>
           <h1>No Kage Bunshin</h1>
-          <span>Eliminate the clones, keep only the original! 🌀🔥</span>
+          <span>Find the fakes, keep the original — Dattebayo! 🌀🔥</span>
         </div>
 
         <button onClick={onSelectDirectory} type="button">
@@ -47,7 +49,7 @@ function App() {
 
       <section className={AppStyles.table}>
         <section className={AppStyles.tableHeader}>
-          <div> # </div>
+          <div></div>
           <div>Folder</div>
           <div>Filename</div>
           <div>Size</div>
@@ -58,7 +60,9 @@ function App() {
             <input type="checkbox" name="checkbox" />
           </div>
           <div>Document</div>
-          <div>File-1</div>
+          <div>
+            <Checkbox label={'teste'} />
+          </div>
           <div>2 mb</div>
           <div>
             <span>Edit</span>
