@@ -1,19 +1,36 @@
-# README
+# No Kage Bunshin
 
-## About
+## 📌 About
 
-This is the official Wails React-TS template.
+**No Kage Bunshin** é um aplicativo desenvolvido com **Wails**, **Go**, **React** e **TypeScript** para analisar e identificar arquivos duplicados, incluindo arquivos comprimidos. O sistema percorre uma pasta específica, detecta arquivos semelhantes com base em seus nomes e conteúdos e realiza uma verificação profunda extraindo arquivos compactados (ZIP, GZIP, 7z) para comparar seus conteúdos.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## 🚀 Technologies
 
-## Live Development
+- **[Wails](https://wails.io/)** – Framework para criar aplicações desktop com Go e frontend moderno.
+- **Go** – Linguagem usada para manipulação de arquivos e lógica de backend.
+- **React** + **TypeScript** – Interface interativa e tipada para melhor experiência do usuário.
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+## 🛠 Features
 
-## Building
+- 📂 Listagem de arquivos com informações detalhadas.
+- 🔍 Detecção de arquivos duplicados por nome e conteúdo.
+- 🗜️ Identificação de arquivos comprimidos e extração automática para análise.
+- 🗑️ Criação de uma pasta temporária para extração e remoção automática após a verificação.
 
-To build a redistributable, production mode package, use `wails build`.
+## 🔧 Live Development
+
+Para rodar o projeto em modo de desenvolvimento:
+
+```bash
+wails dev
+```
+
+## 📦 Building
+Para criar um pacote de produção:
+
+```bash
+wails build
+```
+
+Isso gerará um executável redistribuível para o sistema operacional.
+
