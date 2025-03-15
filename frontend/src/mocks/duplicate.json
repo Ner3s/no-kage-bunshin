@@ -1,0 +1,16 @@
+{
+  "duplicates": [
+    {
+      "original": "/home/user/data/vid(Copy).mp4",
+      "duplicates": ["/home/user/data/vid.mp4"]
+    },
+    {
+      "original": "/home/user/data/test.tsx",
+      "duplicates": [
+        "/home/user/data/test.txt",
+        "/home/user/data/test.js"
+      ]
+    }
+  ],
+  "extractedDirs": null
+}

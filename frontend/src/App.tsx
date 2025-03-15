@@ -4,12 +4,12 @@ import { services } from 'wailsjs/go/models';
 
 import Checkbox from '@/components/checkbox';
 
-import { SelectFolder, ListFiles } from '../wailsjs/go/main/App';
+import { SelectFolder, ListClones } from '../wailsjs/go/main/App';
 import AppStyles from './App.module.scss';
 
 function App() {
   const [folderSelected, setFolder] = useState<string>('');
-  const [fileList, setFileList] = useState<services.FileInfo[]>([]);
+  const [fileList, setFileList] = useState<services.CloneResult>();
 
   async function onSelectDirectory() {
     try {
@@ -21,7 +21,7 @@ function App() {
 
       setFolder(result);
 
-      const fileList = await ListFiles(result);
+      const fileList = await ListClones(result);
       setFileList(fileList);
     } catch (error) {
       console.error(error);
@@ -55,7 +55,7 @@ function App() {
           <div>Actions</div>
         </section>
         <section className={AppStyles.tableContainer}>
-          {fileList
+          {/* {fileList
             .filter((el) => !el.isDir)
             .map((data) => {
               return (
@@ -72,7 +72,8 @@ function App() {
                   </div>
                 </Fragment>
               );
-            })}
+            })} */}
+          {JSON.stringify(fileList)}
         </section>
       </section>
     </main>
