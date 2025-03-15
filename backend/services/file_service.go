@@ -12,7 +12,7 @@ type FileInfo struct {
 	FolderPath string `json:"folderPath"`
 	Filename   string `json:"filename"`
 	Size       int64  `json:"size"`
-	SizeHuman  string `json:"sizeHuman"`
+	HumanSize  string `json:"humanSize"`
 }
 
 func ListFiles(folderPath string) ([]FileInfo, error) {
@@ -39,7 +39,7 @@ func ListFiles(folderPath string) ([]FileInfo, error) {
 			FolderPath: filepath.Dir(path),
 			Filename:   filepath.Base(path),
 			Size:       size,
-			SizeHuman:  utils.FormatSize(size),
+			HumanSize:  utils.FormatSize(size),
 		})
 
 		return nil

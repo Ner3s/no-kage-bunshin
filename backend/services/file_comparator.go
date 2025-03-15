@@ -4,12 +4,14 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"io"
+	"no-kage-bunshin/backend/utils"
 	"os"
+	"path/filepath"
 )
 
 type DuplicateFile struct {
-	Original   string   `json:"original"`
-	Duplicates []string `json:"duplicates"`
+	Original   string     `json:"original"`
+	Duplicates []FileInfo `json:"duplicates"`
 }
 
 func FindDuplicateFiles(folderPath string) ([]DuplicateFile, error) {
@@ -18,8 +20,8 @@ func FindDuplicateFiles(folderPath string) ([]DuplicateFile, error) {
 		return nil, err
 	}
 
-	hashes := make(map[string]string)
-	duplicates := make(map[string][]string)
+	hashes := make(map[string][]FileInfo)
+	// duplicates := make(map[string][]FileInfo)
 
 	for _, file := range files {
 		if file.IsDir {
@@ -32,19 +34,27 @@ func FindDuplicateFiles(folderPath string) ([]DuplicateFile, error) {
 			continue
 		}
 
-		if original, exists := hashes[hash]; exists {
-			duplicates[original] = append(duplicates[original], file.Path)
-		} else {
-			hashes[hash] = file.Path
+		fileInfo := FileInfo{
+			Path:       file.Path,
+			Size:       file.Size,
+			HumanSize:  utils.FormatSize(file.Size),
+			Filename:   filepath.Base(file.Path),
+			FolderPath: filepath.Dir(file.Path),
+			IsDir:      file.IsDir,
 		}
+
+		hashes[hash] = append(hashes[hash], fileInfo)
 	}
 
 	var result []DuplicateFile
-	for original, dupls := range duplicates {
-		result = append(result, DuplicateFile{
-			Original:   original,
-			Duplicates: dupls,
-		})
+	for hash, files := range hashes {
+		if len(files) > 1 {
+			result = append(result, DuplicateFile{
+				Original:   hash,
+				Duplicates: files,
+			})
+		}
+
 	}
 
 	return result, nil

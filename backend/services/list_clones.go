@@ -7,7 +7,7 @@ import (
 )
 
 type CloneResult struct {
-	Duplicates    []DuplicateFile `json:"duplicates"`
+	Clones        []DuplicateFile `json:"clones"`
 	ExtractedDirs []string        `json:"extractedDirs"`
 }
 
@@ -18,7 +18,7 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 	}
 	defer os.RemoveAll(tempDir)
 
-	duplicates, err := FindDuplicateFiles(folderPath)
+	clones, err := FindDuplicateFiles(folderPath)
 	if err != nil {
 		return nil, fmt.Errorf("erro ao buscar duplicatas: %w", err)
 	}
@@ -29,7 +29,7 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 	}
 
 	return &CloneResult{
-		Duplicates:    duplicates,
+		Clones:        clones,
 		ExtractedDirs: extractedDirs,
 	}, nil
 }
