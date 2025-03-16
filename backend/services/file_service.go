@@ -1,22 +1,14 @@
 package services
 
 import (
+	"no-kage-bunshin/backend/models"
 	"no-kage-bunshin/backend/utils"
 	"os"
 	"path/filepath"
 )
 
-type FileInfo struct {
-	Path       string `json:"path"`
-	IsDir      bool   `json:"isDir"`
-	FolderPath string `json:"folderPath"`
-	Filename   string `json:"filename"`
-	Size       int64  `json:"size"`
-	HumanSize  string `json:"humanSize"`
-}
-
-func ListFiles(folderPath string) ([]FileInfo, error) {
-	var files []FileInfo
+func ListFiles(folderPath string) ([]models.FileInfo, error) {
+	var files []models.FileInfo
 
 	err := filepath.WalkDir(folderPath, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
@@ -33,7 +25,7 @@ func ListFiles(folderPath string) ([]FileInfo, error) {
 			size = info.Size()
 		}
 
-		files = append(files, FileInfo{
+		files = append(files, models.FileInfo{
 			Path:       path,
 			IsDir:      d.IsDir(),
 			FolderPath: filepath.Dir(path),

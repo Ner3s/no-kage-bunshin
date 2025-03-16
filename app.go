@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"no-kage-bunshin/backend/models"
 	"no-kage-bunshin/backend/services"
 )
 
@@ -25,7 +26,7 @@ func (a *App) SelectFolder() (string, error) {
 	return services.SelectFolder(a.ctx)
 }
 
-func (a *App) ListFiles(folderPath string) ([]services.FileInfo, error) {
+func (a *App) ListFiles(folderPath string) ([]models.FileInfo, error) {
 	return services.ListFiles(folderPath)
 }
 

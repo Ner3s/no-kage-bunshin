@@ -1,4 +1,4 @@
-export namespace services {
+export namespace models {
 	
 	export class FileInfo {
 	    path: string;
@@ -54,10 +54,15 @@ export namespace services {
 		    return a;
 		}
 	}
+
+}
+
+export namespace services {
+	
 	export class CloneResult {
-	    clones: DuplicateFile[];
+	    clones: models.DuplicateFile[];
 	    extractedDirs: string[];
-	    allFiles: FileInfo[];
+	    allFiles: models.FileInfo[];
 	
 	    static createFrom(source: any = {}) {
 	        return new CloneResult(source);
@@ -65,9 +70,9 @@ export namespace services {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.clones = this.convertValues(source["clones"], DuplicateFile);
+	        this.clones = this.convertValues(source["clones"], models.DuplicateFile);
 	        this.extractedDirs = source["extractedDirs"];
-	        this.allFiles = this.convertValues(source["allFiles"], FileInfo);
+	        this.allFiles = this.convertValues(source["allFiles"], models.FileInfo);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -88,7 +93,6 @@ export namespace services {
 		    return a;
 		}
 	}
-	
 
 }
 
