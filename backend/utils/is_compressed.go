@@ -5,7 +5,6 @@ import (
 	"os"
 )
 
-// IsCompressed verifica se o arquivo é um formato comprimido
 func IsCompressed(filePath string) bool {
 	signatures := [][]byte{
 		{0x50, 0x4B, 0x03, 0x04},             // ZIP

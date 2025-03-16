@@ -1,13 +1,9 @@
 package services
 
 import (
-	"crypto/sha256"
 	"fmt"
-	"io"
 	"no-kage-bunshin/backend/models"
-	"os"
-	"sort"
-	"time"
+	"no-kage-bunshin/backend/utils"
 )
 
 func FindDuplicateFiles(folderPath string) ([]models.DuplicateFile, []models.FileInfo, error) {
@@ -24,7 +20,7 @@ func FindDuplicateFiles(folderPath string) ([]models.DuplicateFile, []models.Fil
 			continue
 		}
 
-		hash, err := computeFileHash(file.Path)
+		hash, err := utils.ComputeFileHash(file.Path)
 		if err != nil {
 			fmt.Println("Erro ao calcular hash:", err)
 			continue
@@ -38,7 +34,7 @@ func FindDuplicateFiles(folderPath string) ([]models.DuplicateFile, []models.Fil
 	for hash, files := range hashes {
 		if len(files) > 1 {
 
-			files, err := detectOldestFile(files)
+			files, err := utils.DetectOldestFile(files)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -56,37 +52,4 @@ func FindDuplicateFiles(folderPath string) ([]models.DuplicateFile, []models.Fil
 	}
 
 	return result, allFiles, nil
-}
-
-func detectOldestFile(files []models.FileInfo) ([]models.FileInfo, error) {
-	sort.Slice(files, func(i, j int) bool {
-		timeI, err := time.Parse(time.RFC3339, files[i].CreatedAt)
-		if err != nil {
-			return false
-		}
-
-		timeJ, err := time.Parse(time.RFC3339, files[j].CreatedAt)
-		if err != nil {
-			return false
-		}
-
-		return timeI.Before(timeJ)
-	})
-
-	return files, nil
-}
-
-func computeFileHash(filePath string) (string, error) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		return "", err
-	}
-	defer file.Close()
-
-	hasher := sha256.New()
-	if _, err := io.Copy(hasher, file); err != nil {
-		return "", err
-	}
-
-	return fmt.Sprintf("%x", hasher.Sum(nil)), nil
 }
