@@ -1,22 +1,23 @@
 package utils
 
 import (
+	"no-kage-bunshin/backend/models"
 	"os"
 	"path/filepath"
 )
 
-func ExtractAndCompare(files []string, tempDir string) ([]string, error) {
+func ExtractAndCompare(files []models.FileInfo, tempDir string) ([]string, error) {
 	var extractedFiles []string
 
 	for _, file := range files {
-		if IsCompressed(file) {
-			destFolder := filepath.Join(tempDir, filepath.Base(file))
+		if IsCompressed(file.Path) {
+			destFolder := filepath.Join(tempDir, filepath.Base(file.Path))
 			err := os.MkdirAll(destFolder, os.ModePerm)
 			if err != nil {
 				return nil, err
 			}
 
-			err = ExtractZIP(file, destFolder)
+			err = ExtractZIP(file.Path, destFolder)
 			if err != nil {
 				return nil, err
 			}

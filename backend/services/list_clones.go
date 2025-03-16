@@ -2,14 +2,15 @@ package services
 
 import (
 	"fmt"
+	"no-kage-bunshin/backend/models"
 	"no-kage-bunshin/backend/utils"
 	"os"
 )
 
 type CloneResult struct {
-	Clones        []DuplicateFile `json:"clones"`
-	ExtractedDirs []string        `json:"extractedDirs"`
-	AllFiles      []FileInfo      `json:"allFiles"`
+	Clones        []models.DuplicateFile `json:"clones"`
+	ExtractedDirs []string               `json:"extractedDirs"`
+	AllFiles      []models.FileInfo      `json:"allFiles"`
 }
 
 func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
@@ -24,15 +25,24 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 		return nil, fmt.Errorf("erro ao buscar duplicatas: %w", err)
 	}
 
-	extractedDirs, err := []string{}, nil
-
-	for _, filesForCheck := range allFiles {
-		extractedDirs, err = utils.ExtractAndCompare([]string{filesForCheck.Path}, tempDir)
-	}
-
+	extractedDirs, err := utils.ExtractAndCompare(allFiles, tempDir)
 	if err != nil {
 		return nil, fmt.Errorf("erro ao extrair arquivos compactados: %w", err)
 	}
+
+	// TODO - Improve this part
+	/**
+	 * @TODO - Improve this part
+	 * - [x] Extracted files are being compared with the original files
+	 * - [] Create a relation between the zip file and the extracted file, because need to delete the zip file and not the extracted file
+	 */
+	// extractedFilesClones, _, err := FindDuplicateFiles(tempDir)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("erro ao buscar duplicatas dos arquivos extraídos: %w", err)
+	// }
+
+	// verifica se existem clones na pasta temporaria e compara com os clones existentes.
+	// clones = utils.combineClones(clones, extractedFilesClones)
 
 	return &CloneResult{
 		Clones:        clones,
