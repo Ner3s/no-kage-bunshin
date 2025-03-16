@@ -5,6 +5,7 @@ import (
 	"no-kage-bunshin/backend/utils"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 func ListFiles(folderPath string) ([]models.FileInfo, error) {
@@ -26,12 +27,14 @@ func ListFiles(folderPath string) ([]models.FileInfo, error) {
 		}
 
 		files = append(files, models.FileInfo{
-			Path:       path,
-			IsDir:      d.IsDir(),
-			FolderPath: filepath.Dir(path),
-			Filename:   filepath.Base(path),
-			Size:       size,
-			HumanSize:  utils.FormatSize(size),
+			Path:          path,
+			IsDir:         d.IsDir(),
+			FolderPath:    filepath.Dir(path),
+			Filename:      filepath.Base(path),
+			Size:          size,
+			HumanSize:     utils.FormatSize(size),
+			FileExtension: filepath.Ext(path),
+			CreatedAt:     info.ModTime().Format(time.RFC3339),
 		})
 
 		return nil

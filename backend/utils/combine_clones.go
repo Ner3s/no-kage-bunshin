@@ -6,15 +6,15 @@ func CombineClones(originalClones, extractedClones []models.DuplicateFile) []mod
 	cloneMap := make(map[string]models.DuplicateFile)
 
 	for _, clone := range originalClones {
-		cloneMap[clone.Original] = clone
+		cloneMap[clone.Hash] = clone
 	}
 
 	for _, clone := range extractedClones {
-		if existingClone, exists := cloneMap[clone.Original]; exists {
+		if existingClone, exists := cloneMap[clone.Hash]; exists {
 			existingClone.Duplicates = append(existingClone.Duplicates, clone.Duplicates...)
-			cloneMap[clone.Original] = existingClone
+			cloneMap[clone.Hash] = existingClone
 		} else {
-			cloneMap[clone.Original] = clone
+			cloneMap[clone.Hash] = clone
 		}
 	}
 

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"io"
 	"no-kage-bunshin/backend/models"
-	"no-kage-bunshin/backend/utils"
 	"os"
-	"path/filepath"
+	"sort"
+	"time"
 )
 
 func FindDuplicateFiles(folderPath string) ([]models.DuplicateFile, []models.FileInfo, error) {
@@ -30,31 +30,50 @@ func FindDuplicateFiles(folderPath string) ([]models.DuplicateFile, []models.Fil
 			continue
 		}
 
-		fileInfo := models.FileInfo{
-			Path:       file.Path,
-			Size:       file.Size,
-			HumanSize:  utils.FormatSize(file.Size),
-			Filename:   filepath.Base(file.Path),
-			FolderPath: filepath.Dir(file.Path),
-			IsDir:      file.IsDir,
-		}
-
-		hashes[hash] = append(hashes[hash], fileInfo)
-		allFiles = append(allFiles, fileInfo)
+		hashes[hash] = append(hashes[hash], file)
+		allFiles = append(allFiles, file)
 	}
 
 	var result []models.DuplicateFile
 	for hash, files := range hashes {
 		if len(files) > 1 {
+
+			files, err := detectOldestFile(files)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			original := files[0]
+			duplicates := files[1:]
+
 			result = append(result, models.DuplicateFile{
-				Original:   hash,
-				Duplicates: files,
+				Hash:       hash,
+				Original:   original,
+				Duplicates: duplicates,
 			})
 		}
 
 	}
 
 	return result, allFiles, nil
+}
+
+func detectOldestFile(files []models.FileInfo) ([]models.FileInfo, error) {
+	sort.Slice(files, func(i, j int) bool {
+		timeI, err := time.Parse(time.RFC3339, files[i].CreatedAt)
+		if err != nil {
+			return false
+		}
+
+		timeJ, err := time.Parse(time.RFC3339, files[j].CreatedAt)
+		if err != nil {
+			return false
+		}
+
+		return timeI.Before(timeJ)
+	})
+
+	return files, nil
 }
 
 func computeFileHash(filePath string) (string, error) {

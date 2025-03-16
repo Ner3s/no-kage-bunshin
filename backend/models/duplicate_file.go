@@ -1,6 +1,7 @@
 package models
 
 type DuplicateFile struct {
-	Original   string     `json:"original"`
+	Hash       string     `json:"hash"`
+	Original   FileInfo   `json:"original"`
 	Duplicates []FileInfo `json:"duplicates"`
 }

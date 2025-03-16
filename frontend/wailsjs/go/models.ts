@@ -7,6 +7,8 @@ export namespace models {
 	    filename: string;
 	    size: number;
 	    humanSize: string;
+	    fileExtension: string;
+	    createdAt: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new FileInfo(source);
@@ -20,10 +22,13 @@ export namespace models {
 	        this.filename = source["filename"];
 	        this.size = source["size"];
 	        this.humanSize = source["humanSize"];
+	        this.fileExtension = source["fileExtension"];
+	        this.createdAt = source["createdAt"];
 	    }
 	}
 	export class DuplicateFile {
-	    original: string;
+	    hash: string;
+	    original: FileInfo;
 	    duplicates: FileInfo[];
 	
 	    static createFrom(source: any = {}) {
@@ -32,7 +37,8 @@ export namespace models {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.original = source["original"];
+	        this.hash = source["hash"];
+	        this.original = this.convertValues(source["original"], FileInfo);
 	        this.duplicates = this.convertValues(source["duplicates"], FileInfo);
 	    }
 	
