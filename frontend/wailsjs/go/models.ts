@@ -57,6 +57,7 @@ export namespace services {
 	export class CloneResult {
 	    clones: DuplicateFile[];
 	    extractedDirs: string[];
+	    allFiles: FileInfo[];
 	
 	    static createFrom(source: any = {}) {
 	        return new CloneResult(source);
@@ -66,6 +67,7 @@ export namespace services {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.clones = this.convertValues(source["clones"], DuplicateFile);
 	        this.extractedDirs = source["extractedDirs"];
+	        this.allFiles = this.convertValues(source["allFiles"], FileInfo);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

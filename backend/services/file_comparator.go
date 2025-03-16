@@ -14,14 +14,14 @@ type DuplicateFile struct {
 	Duplicates []FileInfo `json:"duplicates"`
 }
 
-func FindDuplicateFiles(folderPath string) ([]DuplicateFile, error) {
+func FindDuplicateFiles(folderPath string) ([]DuplicateFile, []FileInfo, error) {
 	files, err := ListFiles(folderPath)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	hashes := make(map[string][]FileInfo)
-	// duplicates := make(map[string][]FileInfo)
+	allFiles := make([]FileInfo, 0)
 
 	for _, file := range files {
 		if file.IsDir {
@@ -44,6 +44,7 @@ func FindDuplicateFiles(folderPath string) ([]DuplicateFile, error) {
 		}
 
 		hashes[hash] = append(hashes[hash], fileInfo)
+		allFiles = append(allFiles, fileInfo)
 	}
 
 	var result []DuplicateFile
@@ -57,7 +58,7 @@ func FindDuplicateFiles(folderPath string) ([]DuplicateFile, error) {
 
 	}
 
-	return result, nil
+	return result, allFiles, nil
 }
 
 func computeFileHash(filePath string) (string, error) {

@@ -9,6 +9,7 @@ import (
 type CloneResult struct {
 	Clones        []DuplicateFile `json:"clones"`
 	ExtractedDirs []string        `json:"extractedDirs"`
+	AllFiles      []FileInfo      `json:"allFiles"`
 }
 
 func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
@@ -18,12 +19,17 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 	}
 	defer os.RemoveAll(tempDir)
 
-	clones, err := FindDuplicateFiles(folderPath)
+	clones, allFiles, err := FindDuplicateFiles(folderPath)
 	if err != nil {
 		return nil, fmt.Errorf("erro ao buscar duplicatas: %w", err)
 	}
 
-	extractedDirs, err := utils.ExtractAndCompare([]string{folderPath}, tempDir)
+	extractedDirs, err := []string{}, nil
+
+	for _, filesForCheck := range allFiles {
+		extractedDirs, err = utils.ExtractAndCompare([]string{filesForCheck.Path}, tempDir)
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("erro ao extrair arquivos compactados: %w", err)
 	}
@@ -31,5 +37,6 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 	return &CloneResult{
 		Clones:        clones,
 		ExtractedDirs: extractedDirs,
+		AllFiles:      allFiles,
 	}, nil
 }
