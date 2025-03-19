@@ -6,6 +6,7 @@ import Checkbox from '@/components/checkbox';
 
 import { SelectFolder, ListClones } from '../wailsjs/go/main/App';
 import AppStyles from './App.module.scss';
+import { Header } from './components/header';
 
 function App() {
   const [folderSelected, setFolder] = useState<string>('');
@@ -30,7 +31,7 @@ function App() {
 
   return (
     <main className={AppStyles.app}>
-      <section className={AppStyles.header}>
+      {/* <section className={AppStyles.header}>
         <div>
           <h1>No Kage Bunshin</h1>
           <span>Find the fakes, keep the original — Dattebayo! 🌀🔥</span>
@@ -39,12 +40,14 @@ function App() {
         <button onClick={onSelectDirectory} type="button">
           Select Directory
         </button>
-      </section>
+      </section> */}
 
-      <section>
+      <Header onSelectDirectory={onSelectDirectory} />
+
+      {/* <section>
         <div>filters</div>
         <input type="search" placeholder="Search for filename" />
-      </section>
+      </section> */}
 
       <section className={AppStyles.table}>
         <section className={AppStyles.tableHeader}>
