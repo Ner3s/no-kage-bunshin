@@ -1,10 +1,7 @@
-import { Fragment, useState } from 'react';
-
-import { services } from 'wailsjs/go/models';
-
-import Checkbox from '@/components/checkbox';
+import { useState } from 'react';
 
 import { SelectFolder, ListClones } from '../wailsjs/go/main/App';
+import { services } from '../wailsjs/go/models';
 import AppStyles from './App.module.scss';
 import { Header } from './components/header';
 
