@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { SelectFolder, ListClones } from '../wailsjs/go/main/App';
 import { services } from '../wailsjs/go/models';
-import AppStyles from './App.module.scss';
 import { Header } from './components/header';
 
 function App() {
@@ -27,7 +26,7 @@ function App() {
   }
 
   return (
-    <main className={AppStyles.app}>
+    <main>
       {/* <section className={AppStyles.header}>
         <div>
           <h1>No Kage Bunshin</h1>
@@ -46,15 +45,15 @@ function App() {
         <input type="search" placeholder="Search for filename" />
       </section> */}
 
-      <section className={AppStyles.table}>
-        <section className={AppStyles.tableHeader}>
+      <section>
+        <section>
           <div></div>
           <div>Folder</div>
           <div>Filename</div>
           <div>Size</div>
           <div>Actions</div>
         </section>
-        <section className={AppStyles.tableContainer}>
+        <section>
           {/* {fileList
             .filter((el) => !el.isDir)
             .map((data) => {

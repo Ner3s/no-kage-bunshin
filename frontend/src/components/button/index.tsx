@@ -1,40 +1,38 @@
 import { ComponentProps } from 'react';
 
-import buttonStyles from './button.module.scss';
+import { tv, VariantProps } from 'tailwind-variants';
 
-type ButtonProps = ComponentProps<'button'>;
+type ButtonProps = ComponentProps<'button'> & VariantProps<typeof button>;
 
-// EXAMPLE
-// import { tv } from 'tailwind-variants';
+const button = tv({
+  base: 'font-medium active:opacity-80 rounded-xl cursor-pointer p-2.5 min-w-16 h-11 md:text-xs lg:text-base flex items-center justify-center',
+  variants: {
+    color: {
+      primary: 'bg-orange-300',
+      delete: 'bg-red-500 text-white'
+    },
+    disabled: {
+      true: 'opacity-50 pointer-events-none'
+    }
+  },
+  defaultVariants: {
+    color: 'primary'
+  }
+});
 
-// const button = tv({
-//   base: 'font-medium bg-blue-500 text-white rounded-full active:opacity-80',
-//   variants: {
-//     color: {
-//       primary: 'bg-blue-500 text-white',
-//       secondary: 'bg-purple-500 text-white'
-//     },
-//     size: {
-//       sm: 'text-sm',
-//       md: 'text-base',
-//       lg: 'px-4 py-3 text-lg'
-//     }
-//   },
-//   compoundVariants: [
-//     {
-//       size: ['sm', 'md'],
-//       class: 'px-3 py-1'
-//     }
-//   ],
-//   defaultVariants: {
-//     size: 'md',
-//     color: 'primary'
-//   }
-// });
-
-function Button({ children, ...rest }: ButtonProps) {
+function Button({
+  children,
+  color,
+  className,
+  disabled,
+  ...rest
+}: ButtonProps) {
   return (
-    <button className={buttonStyles.button} {...rest}>
+    <button
+      className={button({ color, disabled, className })}
+      disabled={disabled}
+      {...rest}
+    >
       {children}
     </button>
   );

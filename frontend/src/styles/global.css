@@ -1,4 +1,4 @@
-@use 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   --bg-color: #f8fafc;
@@ -10,7 +10,6 @@
 
 html {
   background-color: var(--bg-color);
-  text-align: center;
   color: var(--text-color);
 }
 
