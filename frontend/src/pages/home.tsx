@@ -1,7 +1,7 @@
 import { FolderOpen } from 'lucide-react';
 
-import { BaseView } from '@/components/base-view';
-import { Button } from '@/components/button';
+import { BaseView } from '@/components/containers/base-view';
+import { Button } from '@/components/ui/button';
 
 import { Loading } from '@/templates/loading';
 

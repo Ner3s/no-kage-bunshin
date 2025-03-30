@@ -10,8 +10,8 @@ import {
   Gamepad2
 } from 'lucide-react';
 
-import { BaseView, BaseViewProps } from '@/components/base-view';
-import { ProgressBar } from '@/components/progress-bar';
+import { BaseView, BaseViewProps } from '@/components/containers/base-view';
+import { ProgressBar } from '@/components/ui/progress-bar';
 
 type LoadingTemplate = Pick<BaseViewProps, 'title' | 'subtitle'> & {
   isLoading: boolean;

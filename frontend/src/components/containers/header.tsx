@@ -1,7 +1,7 @@
 import { FolderOpen, Trash2 } from 'lucide-react';
 
-import { Button } from '../button';
 import { Logo } from '../icons/logo';
+import { Button } from '../ui/button';
 
 type HeaderProps = {
   folderSelected?: string;

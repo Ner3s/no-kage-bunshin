@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 
-import { Header } from '@/components/header';
+import { Header } from '@/components/containers/header';
 
 import { useFile } from '@/context/use-file';
 
@@ -13,7 +13,7 @@ function Base() {
         isLoading={isLoading}
         onSelectDirectory={onSelectDirectory}
       />
-      <Outlet />;
+      <Outlet />
     </main>
   );
 }
