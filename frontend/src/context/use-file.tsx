@@ -7,6 +7,7 @@ export interface IFileContext {
   folderSelected: string;
   fileList: services.CloneResult | undefined;
   onSelectDirectory: () => Promise<void>;
+  isLoading: boolean;
 }
 
 interface FileProviderProps {
@@ -18,8 +19,10 @@ const FileContext = createContext<IFileContext>({} as IFileContext);
 const FileProvider = ({ children }: FileProviderProps) => {
   const [folderSelected, setFolder] = useState<string>('');
   const [fileList, setFileList] = useState<services.CloneResult>();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function onSelectDirectory() {
+    setIsLoading(true);
     try {
       const result = await SelectFolder();
 
@@ -33,12 +36,14 @@ const FileProvider = ({ children }: FileProviderProps) => {
       setFileList(fileList);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <FileContext.Provider
-      value={{ onSelectDirectory, folderSelected, fileList }}
+      value={{ onSelectDirectory, folderSelected, fileList, isLoading }}
     >
       {children}
     </FileContext.Provider>

@@ -5,6 +5,7 @@ import { Logo } from '../icons/logo';
 
 type HeaderProps = {
   folderSelected?: string;
+  isLoading?: boolean;
   onSelectDirectory: () => void;
   extractFiles?: () => void;
   handleSearchFiles?: (filename: string) => void;
@@ -13,6 +14,7 @@ type HeaderProps = {
 export function Header({
   folderSelected = '',
   onSelectDirectory,
+  isLoading,
   extractFiles,
   handleSearchFiles
 }: HeaderProps) {
@@ -27,14 +29,19 @@ export function Header({
             No Kage Bunshin
           </h1>
         </section>
-        <section>
-          {/* <input type="search" placeholder="Search for filename" /> */}
-          {folderSelected && <span>Folder selected: {folderSelected}</span>}
+        <section className="flex items-center justify-center">
+          {folderSelected && (
+            <span className="font-normal text-gray-500">
+              Folder selected: {folderSelected}
+            </span>
+          )}
         </section>
         <section className="flex items-center justify-end gap-3.5">
-          <Button onClick={onSelectDirectory}>
+          <Button onClick={onSelectDirectory} disabled={isLoading}>
             <FolderOpen />
-            <span className="ml-1">Select Folder</span>
+            <span className="ml-1">
+              {isLoading ? 'Scanning...' : 'Select Folder'}
+            </span>
           </Button>
           <Button color="delete" disabled>
             <Trash2 />
