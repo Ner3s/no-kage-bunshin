@@ -1,16 +1,18 @@
+import { useNavigate } from 'react-router';
+
 import { FolderOpen } from 'lucide-react';
 
 import { BaseView } from '@/components/containers/base-view';
 import { Button } from '@/components/ui/button';
 
-import { Loading } from '@/templates/loading';
-
 import { useFile } from '@/context/use-file';
+import { RoutePaths } from '@/utils/constants/route-paths';
 
 function Home() {
-  const { onSelectDirectory, isLoading } = useFile();
+  const { onSelectDirectory } = useFile();
+  const navigate = useNavigate();
 
-  return !isLoading ? (
+  return (
     <BaseView
       title={
         <>
@@ -27,15 +29,15 @@ function Home() {
       text="large"
       Icon={<FolderOpen size={32} color="var(--color-orange-400)" />}
     >
-      <Button onClick={onSelectDirectory}>Select Folder to Scan</Button>
+      <Button
+        onClick={() => {
+          navigate(RoutePaths.LOADING_CLONES);
+          onSelectDirectory();
+        }}
+      >
+        Select Folder to Scan
+      </Button>
     </BaseView>
-  ) : (
-    <Loading
-      goTo=""
-      isLoading={isLoading}
-      title={<>Scanning for duplicates</>}
-      subtitle={<>This may take a few moments...</>}
-    />
   );
 }
 

@@ -9,11 +9,13 @@ type HeaderProps = {
   onSelectDirectory: () => void;
   extractFiles?: () => void;
   handleSearchFiles?: (filename: string) => void;
+  goToHome: () => void;
 };
 
 export function Header({
   folderSelected = '',
   onSelectDirectory,
+  goToHome,
   isLoading,
   extractFiles,
   handleSearchFiles
@@ -22,12 +24,14 @@ export function Header({
     <header className="flex w-full bg-white p-4 drop-shadow-xs">
       <section className="grid w-full grid-cols-3">
         <section className="flex items-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-400">
-            <Logo width={45.3} height={32.6} />
+          <div className="flex cursor-pointer" onClick={goToHome}>
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-400">
+              <Logo width={45.3} height={32.6} />
+            </div>
+            <h1 className="ml-3 self-center text-center text-2xl font-bold text-orange-400">
+              No Kage Bunshin
+            </h1>
           </div>
-          <h1 className="ml-3 self-center text-center text-2xl font-bold text-orange-400">
-            No Kage Bunshin
-          </h1>
         </section>
         <section className="flex items-center justify-center">
           {folderSelected && (

@@ -23,13 +23,19 @@ const icons = [FileArchive, File, FileAudio, Gamepad2, FileType, FileImage];
 function Loading({ isLoading, goTo = '', title, subtitle }: LoadingTemplate) {
   const [currentIconIndex, setCurrentIconIndex] = useState(0);
   const navigate = useNavigate();
+  const CurrentIcon = icons[currentIconIndex];
 
+  // handle navigation
   useEffect(() => {
-    if (!isLoading && goTo) {
-      navigate(goTo);
-    }
+    const interval = setInterval(() => {
+      if (!isLoading && goTo) {
+        navigate(goTo);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, [goTo, isLoading, navigate]);
 
+  // handle icon change
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIconIndex((prevIndex) => {
@@ -40,7 +46,6 @@ function Loading({ isLoading, goTo = '', title, subtitle }: LoadingTemplate) {
     return () => clearInterval(interval);
   }, []);
 
-  const CurrentIcon = icons[currentIconIndex];
   return (
     <BaseView
       title={title}
