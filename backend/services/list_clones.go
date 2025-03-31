@@ -3,7 +3,6 @@ package services
 import (
 	"fmt"
 	"no-kage-bunshin/backend/models"
-	"no-kage-bunshin/backend/utils"
 	"os"
 )
 
@@ -25,10 +24,10 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 		return nil, fmt.Errorf("erro ao buscar duplicatas: %w", err)
 	}
 
-	extractedDirs, err := utils.ExtractAndCompare(allFiles, tempDir)
-	if err != nil {
-		return nil, fmt.Errorf("erro ao extrair arquivos compactados: %w", err)
-	}
+	// extractedDirs, err := utils.ExtractAndCompare(allFiles, tempDir)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("erro ao extrair arquivos compactados: %w", err)
+	// }
 
 	// TODO - Improve this part
 	/**
@@ -46,7 +45,7 @@ func ListClones(folderPath, tempFolderPrefix string) (*CloneResult, error) {
 
 	return &CloneResult{
 		Clones:        clones,
-		ExtractedDirs: extractedDirs,
+		ExtractedDirs: nil,
 		AllFiles:      allFiles,
 	}, nil
 }

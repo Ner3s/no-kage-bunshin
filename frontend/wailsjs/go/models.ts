@@ -9,6 +9,7 @@ export namespace models {
 	    humanSize: string;
 	    fileExtension: string;
 	    createdAt: string;
+	    selected: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new FileInfo(source);
@@ -24,6 +25,7 @@ export namespace models {
 	        this.humanSize = source["humanSize"];
 	        this.fileExtension = source["fileExtension"];
 	        this.createdAt = source["createdAt"];
+	        this.selected = source["selected"];
 	    }
 	}
 	export class DuplicateFile {

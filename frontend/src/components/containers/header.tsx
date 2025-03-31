@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 type HeaderProps = {
   folderSelected?: string;
   isLoading?: boolean;
+  selectedClonesToRemove?: string[];
   onSelectDirectory: () => void;
   extractFiles?: () => void;
   handleSearchFiles?: (filename: string) => void;
@@ -17,6 +18,7 @@ export function Header({
   onSelectDirectory,
   goToHome,
   isLoading,
+  selectedClonesToRemove,
   extractFiles,
   handleSearchFiles
 }: HeaderProps) {
@@ -47,9 +49,14 @@ export function Header({
               {isLoading ? 'Scanning...' : 'Select Folder'}
             </span>
           </Button>
-          <Button color="delete" disabled>
+          <Button
+            color="delete"
+            disabled={selectedClonesToRemove?.length === 0}
+          >
             <Trash2 />
-            <span className="ml-1">Delete Selected (0)</span>
+            <span className="ml-1">
+              Delete Selected ({selectedClonesToRemove?.length})
+            </span>
           </Button>
         </section>
       </section>

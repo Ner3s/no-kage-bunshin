@@ -35,6 +35,7 @@ func ListFiles(folderPath string) ([]models.FileInfo, error) {
 			HumanSize:     utils.FormatSize(size),
 			FileExtension: filepath.Ext(path),
 			CreatedAt:     info.ModTime().Format(time.RFC3339),
+			Selected:      false,
 		})
 
 		return nil

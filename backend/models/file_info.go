@@ -9,4 +9,5 @@ type FileInfo struct {
 	HumanSize     string `json:"humanSize"`
 	FileExtension string `json:"fileExtension"`
 	CreatedAt     string `json:"createdAt"`
+	Selected      bool   `json:"selected"`
 }

@@ -1,13 +1,22 @@
-import { useContext, useState, createContext } from 'react';
+import {
+  useContext,
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction
+} from 'react';
 
 import { ListClones, SelectFolder } from '../../wailsjs/go/main/App';
 import { services } from '../../wailsjs/go/models';
 
 export interface IFileContext {
-  folderSelected: string;
-  fileList: services.CloneResult | undefined;
-  onSelectDirectory: () => Promise<void>;
   isLoading: boolean;
+  folderSelected: string;
+  selectedClonesToRemove: string[];
+  fileList: services.CloneResult | undefined;
+  setFileList: Dispatch<SetStateAction<services.CloneResult | undefined>>;
+  setSelectedClonesToRemove: Dispatch<SetStateAction<string[]>>;
+  onSelectDirectory: () => Promise<void>;
 }
 
 interface FileProviderProps {
@@ -20,6 +29,9 @@ const FileProvider = ({ children }: FileProviderProps) => {
   const [folderSelected, setFolder] = useState<string>('');
   const [fileList, setFileList] = useState<services.CloneResult>();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedClonesToRemove, setSelectedClonesToRemove] = useState<
+    string[]
+  >([]);
 
   async function onSelectDirectory() {
     setIsLoading(true);
@@ -43,7 +55,15 @@ const FileProvider = ({ children }: FileProviderProps) => {
 
   return (
     <FileContext.Provider
-      value={{ onSelectDirectory, folderSelected, fileList, isLoading }}
+      value={{
+        selectedClonesToRemove,
+        setSelectedClonesToRemove,
+        onSelectDirectory,
+        folderSelected,
+        fileList,
+        isLoading,
+        setFileList
+      }}
     >
       {children}
     </FileContext.Provider>
