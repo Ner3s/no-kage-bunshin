@@ -23,7 +23,7 @@ export function Header({
   handleSearchFiles
 }: HeaderProps) {
   return (
-    <header className="flex w-full bg-white p-4 drop-shadow-xs">
+    <header className="sticky top-0 z-50 flex w-full bg-white p-4 drop-shadow-xs">
       <section className="grid w-full grid-cols-3">
         <section className="flex items-center">
           <div className="flex cursor-pointer" onClick={goToHome}>

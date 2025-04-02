@@ -8,35 +8,37 @@ export const Clones = () => {
   const { fileList, setFileList, setSelectedClonesToRemove } = useFile();
 
   return (
-    <section>
-      {fileList?.clones?.map((file) => (
-        <Card
-          key={file.hash}
-          original={file.original}
-          duplicate={file.duplicates}
-          hash={file.hash}
-          callbackClones={(clones) => {
-            const newClones = fileList?.clones?.map((item) => {
-              if (item.hash === clones.hash) {
-                return clones;
-              }
-              return item;
-            });
+    <section className="flex w-full flex-col items-center justify-center">
+      <section className="flex min-w-[800px] flex-col gap-4 p-4 pb-8">
+        {fileList?.clones?.map((file) => (
+          <Card
+            key={file.hash}
+            original={file.original}
+            duplicate={file.duplicates}
+            hash={file.hash}
+            callbackClones={(clones) => {
+              const newClones = fileList?.clones?.map((item) => {
+                if (item.hash === clones.hash) {
+                  return clones;
+                }
+                return item;
+              });
 
-            setSelectedClonesToRemove(
-              newClones
-                ?.flatMap((item) => item.duplicates)
-                .filter((item) => item.selected)
-                .map((item) => item.path) || []
-            );
+              setSelectedClonesToRemove(
+                newClones
+                  ?.flatMap((item) => item.duplicates)
+                  .filter((item) => item.selected)
+                  .map((item) => item.path) || []
+              );
 
-            setFileList({
-              ...fileList,
-              clones: newClones
-            } as services.CloneResult);
-          }}
-        />
-      ))}
+              setFileList({
+                ...fileList,
+                clones: newClones
+              } as services.CloneResult);
+            }}
+          />
+        ))}
+      </section>
     </section>
   );
 };

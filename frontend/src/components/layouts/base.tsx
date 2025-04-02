@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router';
 import { Header } from '@/components/containers/header';
 
 import { useFile } from '@/context/use-file';
+import { RoutePaths } from '@/utils/constants/route-paths';
 
 function Base() {
   const {
@@ -13,7 +14,7 @@ function Base() {
   } = useFile();
   const navigate = useNavigate();
   return (
-    <main className="flex h-full flex-col">
+    <section className="flex h-full flex-col">
       <Header
         goToHome={() => {
           navigate('/');
@@ -21,10 +22,15 @@ function Base() {
         selectedClonesToRemove={selectedClonesToRemove}
         folderSelected={folderSelected}
         isLoading={isLoading}
-        onSelectDirectory={onSelectDirectory}
+        onSelectDirectory={() => {
+          onSelectDirectory();
+          navigate(RoutePaths.LOADING_CLONES);
+        }}
       />
-      <Outlet />
-    </main>
+      <main className="relative flex h-full flex-col">
+        <Outlet />
+      </main>
+    </section>
   );
 }
 

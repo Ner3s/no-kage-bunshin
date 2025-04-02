@@ -1,0 +1,5 @@
+@layer components {
+  .checkbox-custom {
+    @apply flex rounded-xl border border-slate-200 p-2 peer-checked:border-orange-300 peer-checked:bg-orange-200 peer-checked:shadow-md;
+  }
+}

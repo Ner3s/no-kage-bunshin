@@ -1,5 +1,8 @@
+import { CheckSquare } from 'lucide-react';
+
 import { models } from '../../../wailsjs/go/models';
 import { Checkbox } from './checkbox';
+import { CheckboxCustom } from './checkbox-custom';
 
 import { getFileIcon } from '@/utils/helpers/get-file-icon';
 
@@ -39,39 +42,54 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
 
   return (
     <section className="flex flex-col">
-      <div className="flex justify-between">
-        <h4 className="text-lg font-bold">
-          <Icon.Component color={Icon.color} /> {original?.filename} (
-          {duplicate.length > 1
-            ? duplicate.length + ' Copies'
-            : duplicate.length + ' Copy'}
-          )
-        </h4>
-        <div>
-          <Checkbox
-            checked={duplicate.every((clone) => clone.selected)}
-            onChange={(e) => handleSelectAll(e.target.checked)}
-          />
-          {/* <Checkbox
+      <section className="drop-shadow-lg">
+        <div className="flex justify-between rounded-l-2xl rounded-r-2xl rounded-b-none bg-orange-50 p-4">
+          <h4 className="flex items-center text-lg font-bold">
+            <Icon.Component color={Icon.color} />
+            <span className="ml-2">
+              {original?.filename} (
+              {duplicate.length > 1
+                ? duplicate.length + ' Copies'
+                : duplicate.length + ' Copy'}
+            </span>
+            )
+          </h4>
+          <div>
+            <CheckboxCustom
+              checked={duplicate.every((clone) => clone.selected)}
+              onChange={(e) => handleSelectAll(e.target.checked)}
+            >
+              <span className="flex text-sm font-bold">
+                <CheckSquare size={16} className="mr-1" />
+                Select All
+              </span>
+            </CheckboxCustom>
+            {/* <Checkbox
             checked={duplicate.every((file) => file)}
-          /> */}
-        </div>
-      </div>
-      <div>
-        {duplicate.map((file, index) => (
-          <div key={index} className="flex flex-col">
-            <Checkbox
-              checked={file.selected}
-              onChange={() => {
-                handleSelect(index);
-              }}
-            />
-            <span>{file.filename}</span>
-            <span>{file.humanSize}</span>
-            <span>{file.path}</span>
+            /> */}
           </div>
-        ))}
-      </div>
+        </div>
+        <div className="flex flex-col rounded-br-2xl rounded-bl-2xl bg-white">
+          {duplicate.map((file, index) => (
+            <div key={index} className="flex flex-col p-4">
+              <div className="flex">
+                <Checkbox
+                  shape="circle"
+                  checked={file.selected}
+                  onChange={() => {
+                    handleSelect(index);
+                  }}
+                />
+                <div className="ml-2 flex w-full justify-between">
+                  <span className="font-bold">{file.filename}</span>
+                  <span>{file.humanSize}</span>
+                </div>
+              </div>
+              <span>{file.path}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </section>
   );
 }
