@@ -1,9 +1,14 @@
 import React from 'react';
 
 import { FileProvider } from './use-file';
+import { ToastProvider } from './use-toast';
 
 function AppProvider({ children }: { children: React.ReactNode }) {
-  return <FileProvider>{children}</FileProvider>;
+  return (
+    <ToastProvider>
+      <FileProvider>{children}</FileProvider>
+    </ToastProvider>
+  );
 }
 
 export { AppProvider };
