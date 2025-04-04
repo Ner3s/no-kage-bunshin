@@ -33,3 +33,7 @@ func (a *App) ListFiles(folderPath string) ([]models.FileInfo, error) {
 func (a *App) ListClones(folderPath string) (*services.CloneResult, error) {
 	return services.ListClones(folderPath, "tempNoKageBunshin")
 }
+
+func (a *App) DeleteDuplicatedFiles(filesPaths []string, isPermanent bool) (string, error) {
+	return services.DeleteDuplicatedFiles(filesPaths, isPermanent)
+}

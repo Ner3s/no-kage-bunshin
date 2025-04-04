@@ -10,6 +10,7 @@ type HeaderProps = {
   onSelectDirectory: () => void;
   extractFiles?: () => void;
   handleSearchFiles?: (filename: string) => void;
+  handleOnDeleteClones?: () => void;
   goToHome: () => void;
 };
 
@@ -19,6 +20,7 @@ export function Header({
   goToHome,
   isLoading,
   selectedClonesToRemove,
+  handleOnDeleteClones,
   extractFiles,
   handleSearchFiles
 }: HeaderProps) {
@@ -52,6 +54,7 @@ export function Header({
           <Button
             color="delete"
             disabled={selectedClonesToRemove?.length === 0}
+            onClick={handleOnDeleteClones}
           >
             <Trash2 />
             <span className="ml-1">

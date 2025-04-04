@@ -10,7 +10,8 @@ function Base() {
     onSelectDirectory,
     isLoading,
     folderSelected,
-    selectedClonesToRemove
+    selectedClonesToRemove,
+    onDeleteClones
   } = useFile();
   const navigate = useNavigate();
   return (
@@ -26,6 +27,7 @@ function Base() {
           onSelectDirectory();
           navigate(RoutePaths.LOADING_CLONES);
         }}
+        handleOnDeleteClones={onDeleteClones}
       />
       <main className="relative flex h-full flex-col">
         <Outlet />

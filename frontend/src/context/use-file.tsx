@@ -6,8 +6,13 @@ import {
   SetStateAction
 } from 'react';
 
-import { ListClones, SelectFolder } from '../../wailsjs/go/main/App';
+import {
+  DeleteDuplicatedFiles,
+  ListClones,
+  SelectFolder
+} from '../../wailsjs/go/main/App';
 import { services } from '../../wailsjs/go/models';
+import { useToast } from './use-toast';
 
 export interface IFileContext {
   isLoading: boolean;
@@ -17,6 +22,7 @@ export interface IFileContext {
   setFileList: Dispatch<SetStateAction<services.CloneResult | undefined>>;
   setSelectedClonesToRemove: Dispatch<SetStateAction<string[]>>;
   onSelectDirectory: () => Promise<void>;
+  onDeleteClones: () => Promise<void>;
 }
 
 interface FileProviderProps {
@@ -32,6 +38,7 @@ const FileProvider = ({ children }: FileProviderProps) => {
   const [selectedClonesToRemove, setSelectedClonesToRemove] = useState<
     string[]
   >([]);
+  const { showToast } = useToast();
 
   async function onSelectDirectory() {
     setIsLoading(true);
@@ -43,13 +50,51 @@ const FileProvider = ({ children }: FileProviderProps) => {
       }
 
       setFolder(result);
-
-      const fileList = await ListClones(result);
-      setFileList(fileList);
+      await onListClones(result);
     } catch (error) {
-      console.error(error);
+      showToast({
+        type: 'error',
+        message: 'Error selecting folder'
+      });
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function onListClones(selectedFolder: string) {
+    setIsLoading(true);
+    try {
+      const fileList = await ListClones(selectedFolder);
+      setFileList(fileList);
+    } catch (error) {
+      showToast({
+        type: 'error',
+        message: 'Error listing clones'
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function onDeleteClones() {
+    setIsLoading(true);
+    try {
+      if (!selectedClonesToRemove) {
+        return;
+      }
+
+      const result = await DeleteDuplicatedFiles(selectedClonesToRemove, false);
+      showToast({ type: 'success', message: result });
+
+      await onListClones(folderSelected);
+    } catch (error) {
+      showToast({
+        type: 'error',
+        message: 'Error deleting clones'
+      });
+    } finally {
+      setIsLoading(false);
+      setSelectedClonesToRemove([]);
     }
   }
 
@@ -59,6 +104,7 @@ const FileProvider = ({ children }: FileProviderProps) => {
         selectedClonesToRemove,
         setSelectedClonesToRemove,
         onSelectDirectory,
+        onDeleteClones,
         folderSelected,
         fileList,
         isLoading,

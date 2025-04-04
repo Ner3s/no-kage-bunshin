@@ -1,11 +1,21 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+
 import { Card } from '@/components/ui/card';
 
 import { services } from '../../wailsjs/go/models';
 
 import { useFile } from '@/context/use-file';
+import { RoutePaths } from '@/utils/constants/route-paths';
 
 export const Clones = () => {
   const { fileList, setFileList, setSelectedClonesToRemove } = useFile();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!fileList?.clones) navigate(RoutePaths.HOME);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="flex w-full flex-col items-center justify-center">

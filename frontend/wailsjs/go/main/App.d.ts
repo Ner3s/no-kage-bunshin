@@ -3,6 +3,8 @@
 import {services} from '../models';
 import {models} from '../models';
 
+export function DeleteDuplicatedFiles(arg1:Array<string>,arg2:boolean):Promise<string>;
+
 export function ListClones(arg1:string):Promise<services.CloneResult>;
 
 export function ListFiles(arg1:string):Promise<Array<models.FileInfo>>;
