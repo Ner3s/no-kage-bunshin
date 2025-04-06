@@ -1,6 +1,6 @@
 <br>
 <div align="center">
-  ![Logo](./resources/icon.png)
+  <img src="./build/appicon.png" width="128"/>
   <h1 align="center">No Kage Bunshin</h1>
   <p align="center"><strong>No Kage Bunshin é um software de remoção de arquivos duplicados</strong></p>
 
