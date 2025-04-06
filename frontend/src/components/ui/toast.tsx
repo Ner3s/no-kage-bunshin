@@ -9,11 +9,11 @@ export type ToastProps = {
 };
 
 const toastStyles = tv({
-  base: 'absolute right-4 bottom-4 z-50 flex min-w-80 flex-col rounded-xl bg-white p-4 shadow-md transition-all duration-300 ease-in-out',
+  base: 'fixed right-6 bottom-6 z-50 flex min-w-80 flex-col rounded-xl bg-white p-4 shadow-md transition-all duration-300 ease-in-out',
   variants: {
     isVisible: {
-      true: 'opacity-100',
-      false: 'opacity-0'
+      true: 'opacity-100 flex',
+      false: 'opacity-0 hidden'
     }
   }
 });

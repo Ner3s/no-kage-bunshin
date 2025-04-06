@@ -1,23 +1,42 @@
-# No Kage Bunshin
+<br>
+<div align="center">
+  ![Logo](./resources/icon.png)
+  <h1 align="center">No Kage Bunshin</h1>
+  <p align="center"><strong>No Kage Bunshin é um software de remoção de arquivos duplicados</strong></p>
 
-## 📌 About
+</div>
 
-**No Kage Bunshin** é um aplicativo desenvolvido com **Wails**, **Go**, **React** e **TypeScript** para analisar e identificar arquivos duplicados, incluindo arquivos comprimidos. O sistema percorre uma pasta específica, detecta arquivos semelhantes com base em seus nomes e conteúdos e realiza uma verificação profunda extraindo arquivos compactados (ZIP, GZIP, 7z) para comparar seus conteúdos.
+## Visão Geral
 
-## 🚀 Technologies
+**No Kage Bunshin** é um aplicativo desktop desenvolvido com Wails, Go, React e TypeScript, projetado para identificar e gerenciar arquivos duplicados em um sistema. O nome faz referência à técnica de clonagem do anime Naruto ("Kage Bunshin no Jutsu"), aludindo à ideia de encontrar "clones" (arquivos duplicados) e eliminá-los para manter apenas os originais.
 
-- **[Wails](https://wails.io/)** – Framework para criar aplicações desktop com Go e frontend moderno.
-- **Go** – Linguagem usada para manipulação de arquivos e lógica de backend.
-- **React** + **TypeScript** – Interface interativa e tipada para melhor experiência do usuário.
+## Arquitetura do Sistema
+O aplicativo segue uma arquitetura de duas camadas:
 
-## 🛠 Features
+- Backend (Go): Responsável pela análise de arquivos, detecção de duplicatas e operações do sistema de arquivos
+- Frontend (React/TypeScript): Interface de usuário interativa que permite visualizar e gerenciar os arquivos duplicados
 
-- 📂 Listagem de arquivos com informações detalhadas.
-- 🔍 Detecção de arquivos duplicados por nome e conteúdo.
-- 🗜️ Identificação de arquivos comprimidos e extração automática para análise.
-- 🗑️ Criação de uma pasta temporária para extração e remoção automática após a verificação.
+## Recursos
 
-## 🔧 Live Development
+- Listagem de arquivos com informações detalhadas.
+- Detecção de arquivos duplicados por conteúdo.
+- Identificação de arquivos comprimidos e extração automática para análise. (incompleto)
+- Criação de uma pasta temporária para extração e remoção automática após a verificação. (incompleto)
+
+## Implementações Técnicas
+### Backend (Go)
+- Hash de Arquivos: Implementação eficiente de cálculo de hash SHA-256
+- Manipulação do Sistema de Arquivos: APIs nativas do Go para operações em arquivos
+- Detecção de Data de Criação: Identificação do arquivo mais antigo entre duplicatas
+- Movimentação para Lixeira: Implementações específicas para cada sistema operacional
+
+### Frontend (React/TypeScript)
+- Interface Responsiva: Design adaptável com Tailwind CSS
+- Gerenciamento de Estado: Contexto React para gerenciar o estado da aplicação
+- Navegação: Sistema de rotas para diferentes telas
+- Ícones por Tipo de Arquivo: Sistema visual que identifica o tipo de arquivo baseado na extensão
+
+## Desenvolvimento
 
 Para rodar o projeto em modo de desenvolvimento:
 
@@ -25,7 +44,7 @@ Para rodar o projeto em modo de desenvolvimento:
 wails dev
 ```
 
-## 📦 Building
+## Construção
 Para criar um pacote de produção:
 
 ```bash

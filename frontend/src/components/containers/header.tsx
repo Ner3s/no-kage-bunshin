@@ -29,10 +29,10 @@ export function Header({
       <section className="grid w-full grid-cols-3">
         <section className="flex items-center">
           <div className="flex cursor-pointer" onClick={goToHome}>
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
-              <Logo width={45.3} height={32.6} />
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-400">
+              <Logo width={48} height={48} />
             </div>
-            <h1 className="ml-3 self-center text-center text-2xl font-bold text-gray-600">
+            <h1 className="ml-3 self-center text-center text-2xl font-extrabold text-gray-800">
               No Kage Bunshin
             </h1>
           </div>
