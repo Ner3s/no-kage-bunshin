@@ -13,26 +13,50 @@
 
 ## Arquitetura do Sistema
 
-O aplicativo segue uma arquitetura de duas camadas:
+O aplicativo segue uma arquitetura baseada em Domain-Driven Design (DDD) e Clean Architecture:
 
-- Backend (Go): Responsável pela análise de arquivos, detecção de duplicatas e operações do sistema de arquivos
-- Frontend (React/TypeScript): Interface de usuário interativa que permite visualizar e gerenciar os arquivos duplicados
+### Back-end (Go)
+
+A estrutura do backend segue os princípios do DDD e Clean Architecture com as seguintes camadas:
+
+1. **Domain Layer (Camada de Domínio)**
+   - **Entities**: Contém as entidades principais do sistema como `FileInfo` e `DuplicateFile`
+   - **Repositories**: Define interfaces para acesso a dados
+   - **Services**: Define interfaces para serviços de domínio
+
+2. **Application Layer (Camada de Aplicação)**
+   - **Use Cases**: Implementa os casos de uso da aplicação, orquestrando a lógica de negócios
+
+3. **Infrastructure Layer (Camada de Infraestrutura)**
+   - **Persistence**: Implementações concretas para repositórios e serviços
+   - **Utils**: Funções utilitárias de baixo nível
+
+4. **Interfaces Layer (Camada de Interfaces)**
+   - **Handlers**: Adaptadores para expor funcionalidades para a interface do usuário
+
+### Front-end (React/TypeScript)
+
+- Interface de usuário interativa que permite visualizar e gerenciar os arquivos duplicados
+- Utiliza o Wails para comunicação com o backend Go
 
 ## Recursos
 
-- Listagem de arquivos com informações detalhadas.
-- Detecção de arquivos duplicados por conteúdo.
-- Identificação de arquivos comprimidos e extração automática para análise. (incompleto)
-- Criação de uma pasta temporária para extração e remoção automática após a verificação. (incompleto)
+- Detecção rápida de arquivos duplicados usando hash SHA-256
+- Identificação automática do arquivo original (mais antigo) entre duplicatas
+- Suporte para análise de arquivos compactados
+- Interface gráfica intuitiva para gerenciar duplicatas
+- Opção para mover arquivos duplicados para a lixeira ou excluir permanentemente
 
 ## Implementações Técnicas
 
 ### Backend (Go)
 
-- Hash de Arquivos: Implementação eficiente de cálculo de hash SHA-256
-- Manipulação do Sistema de Arquivos: APIs nativas do Go para operações em arquivos
-- Detecção de Data de Criação: Identificação do arquivo mais antigo entre duplicatas
-- Movimentação para Lixeira: Implementações específicas para cada sistema operacional
+- **Domain-Driven Design**: Separação clara entre as camadas de domínio, aplicação e infraestrutura
+- **Clean Architecture**: Dependências apontam para dentro, com as camadas internas sem conhecimento das externas
+- **Hash de Arquivos**: Implementação eficiente de cálculo de hash SHA-256
+- **Manipulação do Sistema de Arquivos**: APIs nativas do Go para operações em arquivos
+- **Detecção de Data de Criação**: Identificação do arquivo mais antigo entre duplicatas
+- **Movimentação para Lixeira**: Implementações específicas para cada sistema operacional
 
 ### Frontend (React/TypeScript)
 
@@ -51,10 +75,14 @@ wails dev
 
 ## Construção
 
-Para criar um pacote de produção:
+Para compilar o projeto:
+
+```bash
+./build.sh
+```
+
+ou
 
 ```bash
 wails build
 ```
-
-Isso gerará um executável redistribuível para o sistema operacional.
