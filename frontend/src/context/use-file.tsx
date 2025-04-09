@@ -11,15 +11,15 @@ import {
   ListClones,
   SelectFolder
 } from '../../wailsjs/go/main/App';
-import { services } from '../../wailsjs/go/models';
+import { usecases } from '../../wailsjs/go/models';
 import { useToast } from './use-toast';
 
 export interface IFileContext {
   isLoading: boolean;
   folderSelected: string;
   selectedClonesToRemove: string[];
-  fileList: services.CloneResult | undefined;
-  setFileList: Dispatch<SetStateAction<services.CloneResult | undefined>>;
+  fileList: usecases.CloneResult | undefined;
+  setFileList: Dispatch<SetStateAction<usecases.CloneResult | undefined>>;
   setSelectedClonesToRemove: Dispatch<SetStateAction<string[]>>;
   onSelectDirectory: () => Promise<void>;
   onDeleteClones: () => Promise<void>;
@@ -33,7 +33,7 @@ const FileContext = createContext<IFileContext>({} as IFileContext);
 
 const FileProvider = ({ children }: FileProviderProps) => {
   const [folderSelected, setFolder] = useState<string>('');
-  const [fileList, setFileList] = useState<services.CloneResult>();
+  const [fileList, setFileList] = useState<usecases.CloneResult>();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedClonesToRemove, setSelectedClonesToRemove] = useState<
     string[]
@@ -66,7 +66,11 @@ const FileProvider = ({ children }: FileProviderProps) => {
     try {
       const fileList = await ListClones(selectedFolder);
       setFileList(fileList);
+      console.log(fileList);
+      if (fileList.clones === null)
+        showToast({ type: 'info', message: 'No clones found' });
     } catch (error) {
+      console.log(error);
       showToast({
         type: 'error',
         message: 'Error listing clones'

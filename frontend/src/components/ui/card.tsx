@@ -1,15 +1,15 @@
 import { CheckSquare } from 'lucide-react';
 
-import { models } from '../../../wailsjs/go/models';
+import { entities } from '../../../wailsjs/go/models';
 import { Checkbox } from './checkbox';
 import { CheckboxCustom } from './checkbox-custom';
 
 import { getFileIcon } from '@/utils/helpers/get-file-icon';
 
 type CardProps = {
-  original: models.FileInfo;
-  duplicate: models.FileInfo[];
-  callbackClones?: (clones: models.DuplicateFile) => void;
+  original: entities.FileInfo;
+  duplicate: entities.FileInfo[];
+  callbackClones?: (clones: entities.DuplicateFile) => void;
   hash: string;
 };
 
@@ -25,7 +25,7 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
       duplicates: newClones,
       hash,
       original
-    } as models.DuplicateFile);
+    } as entities.DuplicateFile);
   };
 
   const handleSelect = (index: number) => {
@@ -37,7 +37,7 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
       duplicates: newClones,
       hash,
       original
-    } as models.DuplicateFile);
+    } as entities.DuplicateFile);
   };
 
   return (

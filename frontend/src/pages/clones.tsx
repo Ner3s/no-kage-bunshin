@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { Card } from '@/components/ui/card';
 
-import { services } from '../../wailsjs/go/models';
+import { usecases } from '../../wailsjs/go/models';
 
 import { useFile } from '@/context/use-file';
 import { RoutePaths } from '@/utils/constants/route-paths';
@@ -44,7 +44,7 @@ export const Clones = () => {
               setFileList({
                 ...fileList,
                 clones: newClones
-              } as services.CloneResult);
+              } as usecases.CloneResult);
             }}
           />
         ))}
