@@ -3,16 +3,15 @@ import {
   useState,
   createContext,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  useEffect
 } from 'react';
 
-import {
-  DeleteDuplicatedFiles,
-  ListClones,
-  SelectFolder
-} from '../../wailsjs/go/main/App';
 import { usecases } from '../../wailsjs/go/models';
 import { useToast } from './use-toast';
+
+// Importamos diretamente do novo módulo de adapters de arquivo
+import { FileAdapter } from '@/utils/adapters/file';
 
 export interface IFileContext {
   isLoading: boolean;
@@ -43,7 +42,7 @@ const FileProvider = ({ children }: FileProviderProps) => {
   async function onSelectDirectory() {
     setIsLoading(true);
     try {
-      const result = await SelectFolder();
+      const result = await FileAdapter.selectFolder();
 
       if (!result) {
         return;
@@ -64,7 +63,7 @@ const FileProvider = ({ children }: FileProviderProps) => {
   async function onListClones(selectedFolder: string) {
     setIsLoading(true);
     try {
-      const fileList = await ListClones(selectedFolder);
+      const fileList = await FileAdapter.listClones(selectedFolder);
       setFileList(fileList);
       console.log(fileList);
       if (fileList.clones === null)
@@ -83,11 +82,14 @@ const FileProvider = ({ children }: FileProviderProps) => {
   async function onDeleteClones() {
     setIsLoading(true);
     try {
-      if (!selectedClonesToRemove) {
+      if (!selectedClonesToRemove?.length) {
         return;
       }
 
-      const result = await DeleteDuplicatedFiles(selectedClonesToRemove, false);
+      const result = await FileAdapter.deleteDuplicatedFiles(
+        selectedClonesToRemove,
+        false
+      );
       showToast({ type: 'success', message: result });
 
       await onListClones(folderSelected);
