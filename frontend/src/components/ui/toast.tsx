@@ -48,6 +48,7 @@ function Toast({
           </span>
         </div>
         <button
+          data-testid="close-toast"
           onClick={hideToast}
           className="cursor-pointer rounded-full p-2 hover:bg-gray-200"
         >

@@ -3,8 +3,7 @@ import {
   useState,
   createContext,
   Dispatch,
-  SetStateAction,
-  useEffect
+  SetStateAction
 } from 'react';
 
 import { usecases } from '../../wailsjs/go/models';

@@ -7,11 +7,11 @@ const checkbox = tv({
   variants: {
     shape: {
       rounded: 'rounded',
-      circle: 'rounded-full' // Variante totalmente redonda
+      circle: 'rounded-full'
     }
   },
   defaultVariants: {
-    shape: 'rounded' // Padrão: bordas arredondadas
+    shape: 'rounded'
   }
 });
 

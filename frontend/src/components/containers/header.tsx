@@ -20,9 +20,7 @@ export function Header({
   goToHome,
   isLoading,
   selectedClonesToRemove,
-  handleOnDeleteClones,
-  extractFiles,
-  handleSearchFiles
+  handleOnDeleteClones
 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-10 flex w-full bg-white p-4 drop-shadow-xs">

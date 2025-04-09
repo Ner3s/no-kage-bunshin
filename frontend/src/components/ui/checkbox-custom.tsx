@@ -3,7 +3,7 @@ import { ComponentProps, forwardRef } from 'react';
 type CheckboxProps = ComponentProps<'input'> & {};
 
 export const CheckboxCustom = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, id, children, ...props }, ref) => {
+  ({ id, children, ...props }, ref) => {
     const checkboxId =
       id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
 
