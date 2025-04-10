@@ -8,12 +8,16 @@ export type ToastProps = {
   hideToast?: () => void;
 };
 
+const toastContainerStyles = tv({
+  base: 'fixed right-6 bottom-6 z-50 flex flex-col gap-2'
+});
+
 const toastStyles = tv({
-  base: 'fixed right-6 bottom-6 z-50 flex min-w-80 flex-col rounded-xl bg-white p-4 shadow-md transition-all duration-300 ease-in-out',
+  base: 'flex min-w-80 flex-col rounded-xl bg-white p-4 shadow-md transition-all duration-300 ease-in-out transform',
   variants: {
     isVisible: {
-      true: 'opacity-100 flex',
-      false: 'opacity-0 hidden'
+      true: 'opacity-100 translate-y-0',
+      false: 'opacity-0 translate-y-2'
     }
   }
 });
@@ -57,6 +61,10 @@ function Toast({
       </div>
     </section>
   );
+}
+
+export function ToastContainer({ children }: { children: React.ReactNode }) {
+  return <div className={toastContainerStyles()}>{children}</div>;
 }
 
 export { Toast };

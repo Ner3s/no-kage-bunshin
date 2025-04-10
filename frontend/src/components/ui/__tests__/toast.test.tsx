@@ -60,7 +60,7 @@ describe('Toast component', () => {
     );
 
     const section = container.firstChild as HTMLElement;
-    expect(section).toHaveClass('hidden');
+    expect(section).toHaveClass('translate-y-2');
   });
 
   it('calls hideToast when close button is clicked', async () => {

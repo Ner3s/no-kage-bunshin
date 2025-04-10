@@ -1,13 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { Toast, ToastProps } from '@/components/ui/toast';
+import { Toast, ToastContainer } from '@/components/ui/toast';
 
-type TShowToast = { duration?: number } & Omit<ToastProps, 'hideToast'>;
+export type ToastData = {
+  id: string;
+  message?: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  duration?: number;
+  isVisible?: boolean;
+};
 
 interface IToastContext {
-  toastData: TShowToast;
-  showToast: (data: TShowToast) => void;
-  hideToast: () => void;
+  toasts: ToastData[];
+  showToast: (data: Omit<ToastData, 'id' | 'isVisible'>) => void;
+  hideToast: (id: string) => void;
 }
 
 interface ToastProviderProps {
@@ -17,35 +23,71 @@ interface ToastProviderProps {
 const ToastContext = createContext<IToastContext | undefined>(undefined);
 
 export const ToastProvider = ({ children }: ToastProviderProps) => {
-  const [toastData, setToastData] = useState<TShowToast>({
-    message: '',
-    type: 'success',
-    duration: 3000
-  });
+  const [toasts, setToasts] = useState<ToastData[]>([]);
 
-  const showToast = (data: TShowToast) => {
-    setToastData({ ...data, duration: data.duration || 3000, isVisible: true });
+  const showToast = (data: Omit<ToastData, 'id' | 'isVisible'>) => {
+    const id = Date.now().toString();
+    const newToast = {
+      ...data,
+      id,
+      duration: data.duration || 3000,
+      isVisible: true
+    };
+
+    setToasts((prevToasts) => [...prevToasts, newToast]);
   };
-  const hideToast = () => {
-    setToastData((prevState) => ({
-      ...prevState,
-      isVisible: false
-    }));
+
+  const hideToast = (id: string) => {
+    setToasts((prevToasts) =>
+      prevToasts.map((toast) =>
+        toast.id === id ? { ...toast, isVisible: false } : toast
+      )
+    );
   };
 
   useEffect(() => {
-    if (toastData.isVisible) {
-      const timer = setTimeout(() => {
-        hideToast();
-      }, toastData.duration);
+    const visibleToasts = toasts.filter((toast) => toast.isVisible);
 
-      return () => clearTimeout(timer);
+    if (visibleToasts.length > 0) {
+      const timers = visibleToasts.map((toast) => {
+        return setTimeout(() => {
+          hideToast(toast.id);
+        }, toast.duration);
+      });
+
+      return () => timers.forEach(clearTimeout);
     }
-  }, [toastData.isVisible, toastData.duration]);
+  }, [toasts]);
+
+  useEffect(() => {
+    const invisibleToasts = toasts.filter((toast) => toast.isVisible === false);
+
+    if (invisibleToasts.length > 0) {
+      const timers = invisibleToasts.map((toast) => {
+        return setTimeout(() => {
+          setToasts((prevToasts) =>
+            prevToasts.filter((t) => t.id !== toast.id)
+          );
+        }, 300);
+      });
+
+      return () => timers.forEach(clearTimeout);
+    }
+  }, [toasts]);
 
   return (
-    <ToastContext.Provider value={{ hideToast, showToast, toastData }}>
-      <Toast {...toastData} hideToast={hideToast} />
+    <ToastContext.Provider value={{ toasts, hideToast, showToast }}>
+      <ToastContainer>
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            isVisible={toast.isVisible}
+            hideToast={() => hideToast(toast.id)}
+          />
+        ))}
+      </ToastContainer>
       {children}
     </ToastContext.Provider>
   );
