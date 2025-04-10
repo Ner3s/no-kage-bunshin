@@ -13,7 +13,7 @@ import {
 import { BaseView, BaseViewProps } from '@/components/containers/base-view';
 import { ProgressBar } from '@/components/ui/progress-bar';
 
-type LoadingTemplate = Pick<BaseViewProps, 'title' | 'subtitle'> & {
+export type LoadingTemplate = Pick<BaseViewProps, 'title' | 'subtitle'> & {
   isLoading: boolean;
   goTo?: string;
 };

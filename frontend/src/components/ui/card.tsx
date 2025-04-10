@@ -13,6 +13,11 @@ type CardProps = {
   hash: string;
 };
 
+const handleCopyText = (length: number) => {
+  const text = length > 1 ? 'Copies' : 'Copy';
+  return '(' + length + ' ' + text + ')';
+};
+
 function Card({ original, duplicate, callbackClones, hash }: CardProps) {
   const Icon = getFileIcon(original.fileExtension);
 
@@ -47,12 +52,9 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
           <h4 className="flex items-center text-lg font-bold">
             <Icon.Component color={Icon.color} />
             <span className="ml-2">
-              {original?.filename} (
-              {duplicate.length > 1
-                ? duplicate.length + ' Copies'
-                : duplicate.length + ' Copy'}
+              {original?.filename}
+              {handleCopyText(duplicate.length)}
             </span>
-            )
           </h4>
           <div>
             <CheckboxCustom

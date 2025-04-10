@@ -89,4 +89,9 @@ describe('useToast hook', () => {
 
     expect(result.current.toastData.isVisible).toBe(false);
   });
+  it('should throw exception when dont have provider', async () => {
+    expect(() => renderHook(() => useToast())).toThrow(
+      'useToast must be used within a ToastProvider'
+    );
+  });
 });

@@ -9,7 +9,6 @@ import {
 import { usecases } from '../../wailsjs/go/models';
 import { useToast } from './use-toast';
 
-// Importamos diretamente do novo módulo de adapters de arquivo
 import { FileAdapter } from '@/utils/adapters/file';
 
 export interface IFileContext {
@@ -19,6 +18,7 @@ export interface IFileContext {
   fileList: usecases.CloneResult | undefined;
   setFileList: Dispatch<SetStateAction<usecases.CloneResult | undefined>>;
   setSelectedClonesToRemove: Dispatch<SetStateAction<string[]>>;
+  setFolder: Dispatch<SetStateAction<string>>;
   onSelectDirectory: () => Promise<void>;
   onDeleteClones: () => Promise<void>;
 }
@@ -27,7 +27,7 @@ interface FileProviderProps {
   children: React.ReactNode;
 }
 
-const FileContext = createContext<IFileContext>({} as IFileContext);
+const FileContext = createContext<IFileContext | undefined>(undefined);
 
 const FileProvider = ({ children }: FileProviderProps) => {
   const [folderSelected, setFolder] = useState<string>('');
@@ -113,7 +113,8 @@ const FileProvider = ({ children }: FileProviderProps) => {
         folderSelected,
         fileList,
         isLoading,
-        setFileList
+        setFileList,
+        setFolder
       }}
     >
       {children}

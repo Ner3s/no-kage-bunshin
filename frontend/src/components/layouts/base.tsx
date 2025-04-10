@@ -40,6 +40,7 @@ function Base() {
           <span className="text-sm text-gray-400">Develop by @AlanNer3s</span>
           <a
             className="cursor-pointer rounded bg-blue-300 p-1"
+            data-testid="linkedin"
             onClick={() => {
               handleOpenUrl('https://www.linkedin.com/in/alan-neres/');
             }}
@@ -48,6 +49,7 @@ function Base() {
           </a>
           <a
             className="cursor-pointer rounded bg-gray-600 p-1"
+            data-testid="github"
             onClick={() => {
               handleOpenUrl('https://github.com/ner3s');
             }}

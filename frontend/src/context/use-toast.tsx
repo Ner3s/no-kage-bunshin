@@ -14,7 +14,7 @@ interface ToastProviderProps {
   children: React.ReactNode;
 }
 
-const ToastContext = createContext<IToastContext>({} as IToastContext);
+const ToastContext = createContext<IToastContext | undefined>(undefined);
 
 export const ToastProvider = ({ children }: ToastProviderProps) => {
   const [toastData, setToastData] = useState<TShowToast>({
@@ -53,8 +53,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
 
 export const useToast = () => {
   const context = useContext(ToastContext);
-
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useToast must be used within a ToastProvider');
   }
   return context;
