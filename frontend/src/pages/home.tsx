@@ -16,7 +16,7 @@ function Home() {
     <BaseView
       title={
         <>
-          Find the fakes, keep the original <br />
+          Find the clones, keep the original <br />
           Dattebayo! 🌀🔥
         </>
       }

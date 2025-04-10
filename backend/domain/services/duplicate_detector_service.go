@@ -6,5 +6,5 @@ import (
 
 type DuplicateDetectorService interface {
 	DetectDuplicates(files []entities.FileInfo) ([]entities.DuplicateFile, error)
-	DetectOldestFile(files []entities.FileInfo) ([]entities.FileInfo, error)
+	DetectOriginalFile(files []entities.FileInfo) ([]entities.FileInfo, error)
 }

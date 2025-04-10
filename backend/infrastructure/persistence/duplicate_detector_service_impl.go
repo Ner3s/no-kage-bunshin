@@ -36,7 +36,7 @@ func (s *DuplicateDetectorServiceImpl) DetectDuplicates(files []entities.FileInf
 	var duplicates []entities.DuplicateFile
 	for hash, filesGroup := range filesByHash {
 		if len(filesGroup) > 1 {
-			sortedFiles, err := s.DetectOldestFile(filesGroup)
+			sortedFiles, err := s.DetectOriginalFile(filesGroup)
 			if err != nil {
 				continue
 			}
@@ -54,19 +54,16 @@ func (s *DuplicateDetectorServiceImpl) DetectDuplicates(files []entities.FileInf
 	return duplicates, nil
 }
 
-func (s *DuplicateDetectorServiceImpl) DetectOldestFile(files []entities.FileInfo) ([]entities.FileInfo, error) {
+func (s *DuplicateDetectorServiceImpl) DetectOriginalFile(files []entities.FileInfo) ([]entities.FileInfo, error) {
 	sort.Slice(files, func(i, j int) bool {
-		timeI, err := time.Parse(time.RFC3339, files[i].CreatedAt)
-		if err != nil {
-			return false
+		timeI, errI := time.Parse(time.RFC3339, files[i].CreatedAt)
+		timeJ, errJ := time.Parse(time.RFC3339, files[j].CreatedAt)
+
+		if errI == nil && errJ == nil && !timeI.Equal(timeJ) {
+			return timeI.Before(timeJ)
 		}
 
-		timeJ, err := time.Parse(time.RFC3339, files[j].CreatedAt)
-		if err != nil {
-			return false
-		}
-
-		return timeI.Before(timeJ)
+		return len(files[i].Filename) < len(files[j].Filename)
 	})
 
 	return files, nil

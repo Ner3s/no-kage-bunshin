@@ -52,8 +52,7 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
           <h4 className="flex items-center text-lg font-bold">
             <Icon.Component color={Icon.color} />
             <span className="ml-2">
-              {original?.filename}
-              {handleCopyText(duplicate.length)}
+              {original?.filename} {handleCopyText(duplicate.length)}
             </span>
           </h4>
           <div>
@@ -66,9 +65,6 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
                 Select All
               </span>
             </CheckboxCustom>
-            {/* <Checkbox
-            checked={duplicate.every((file) => file)}
-            /> */}
           </div>
         </div>
         <div className="flex flex-col rounded-br-2xl rounded-bl-2xl bg-white">
