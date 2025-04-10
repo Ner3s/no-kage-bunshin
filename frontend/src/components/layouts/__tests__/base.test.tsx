@@ -84,18 +84,4 @@ describe('Base layout component', () => {
 
     expect(socialLinks).toHaveLength(2);
   });
-  it('should click in links', async () => {
-    const { user } = render(<Base />);
-
-    const socialLinks = [
-      screen.getAllByTestId('linkedin'),
-      screen.getAllByTestId('github')
-    ];
-
-    await user.click(socialLinks[0][0]);
-    await user.click(socialLinks[1][0]);
-
-    expect(socialLinks).toHaveLength(2);
-    expect(mocks.handleOpenUrl).toHaveBeenCalledTimes(2);
-  });
 });

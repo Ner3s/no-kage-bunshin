@@ -18,8 +18,8 @@ export const Clones = () => {
   }, []);
 
   return (
-    <section className="flex w-full flex-col items-center justify-center">
-      <section className="flex min-w-[800px] flex-col gap-4 p-4 pb-8">
+    <div className="w-full max-w-[800px] pt-4">
+      <section className="flex w-full flex-col gap-4">
         {fileList?.clones?.map((file) => (
           <Card
             key={file.hash}
@@ -49,6 +49,6 @@ export const Clones = () => {
           />
         ))}
       </section>
-    </section>
+    </div>
   );
 };
