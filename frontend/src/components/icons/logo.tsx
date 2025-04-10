@@ -1,11 +1,13 @@
 type LogoProps = {
   width?: number;
   height?: number;
+  className?: string;
 };
 
-export function Logo({ width = 128, height = 128 }: LogoProps) {
+export function Logo({ width = 128, height = 128, className = '' }: LogoProps) {
   return (
     <svg
+      className={className}
       width={width}
       height={height}
       viewBox={`0 0 128 128`}

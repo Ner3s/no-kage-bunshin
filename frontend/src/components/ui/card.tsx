@@ -79,11 +79,13 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
                   }}
                 />
                 <div className="ml-2 flex w-full justify-between">
-                  <span className="font-bold">{file.filename}</span>
+                  <span className="font-bold text-ellipsis">
+                    {file.filename}
+                  </span>
                   <span>{file.humanSize}</span>
                 </div>
               </div>
-              <span>{file.path}</span>
+              <span className="truncate text-ellipsis">{file.path}</span>
             </div>
           ))}
         </div>

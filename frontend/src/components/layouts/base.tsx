@@ -33,7 +33,7 @@ function Base() {
         }}
         handleOnDeleteClones={onDeleteClones}
       />
-      <div className="flex flex-grow items-center justify-center px-4 pb-16">
+      <div className="flex grow items-center justify-center px-4 pb-16">
         <Outlet />
       </div>
       <Footer handleOpenUrl={handleOpenUrl} />
