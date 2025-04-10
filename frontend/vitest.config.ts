@@ -13,7 +13,8 @@ const FilesDontNeedToBeTested = [
   'src/pages/**',
   '**/wailsjs/**',
   'dist/**',
-  'coverage/**'
+  'coverage/**',
+  'scripts/**'
 ];
 
 export default defineConfig({

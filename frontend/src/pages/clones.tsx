@@ -14,8 +14,7 @@ export const Clones = () => {
 
   useEffect(() => {
     if (!fileList?.clones) navigate(RoutePaths.HOME);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fileList, navigate]);
 
   return (
     <div className="w-full max-w-[800px] pt-4">

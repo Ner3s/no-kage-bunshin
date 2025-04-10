@@ -47,6 +47,7 @@ export function Header({
 
         <div className="flex items-center justify-center gap-2 sm:justify-start sm:gap-3.5">
           <Button
+            data-testid="btn-select-folder"
             onClick={onSelectDirectory}
             disabled={isLoading}
             className="px-2 py-1 sm:px-3"
@@ -57,6 +58,7 @@ export function Header({
             </span>
           </Button>
           <Button
+            data-testid="btn-delete"
             color="delete"
             disabled={selectedClonesToRemove.length === 0}
             onClick={handleOnDeleteClones}
@@ -64,10 +66,7 @@ export function Header({
           >
             <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
             <span className="ml-1 sm:inline">
-              Delete{' '}
-              <span className="inline-block">
-                ({selectedClonesToRemove.length})
-              </span>
+              {`Delete (${selectedClonesToRemove.length})`}
             </span>
           </Button>
         </div>

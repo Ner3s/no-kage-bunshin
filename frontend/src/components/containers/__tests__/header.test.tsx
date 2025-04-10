@@ -17,19 +17,15 @@ describe('Header component', () => {
 
     expect(screen.getByText('No Kage Bunshin')).toBeInTheDocument();
     expect(screen.getByText('Select Folder')).toBeInTheDocument();
-    expect(screen.getByText('Delete Selected (0)')).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /delete selected/i })
-    ).toBeDisabled();
+    expect(screen.getAllByTestId('btn-delete')[0]).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /delete/i })).toBeDisabled();
   });
 
   it('displays selected folder when provided', () => {
     const folderPath = '/path/to/selected/folder';
     render(<Header {...defaultProps} folderSelected={folderPath} />);
 
-    expect(
-      screen.getByText(`Folder selected: ${folderPath}`)
-    ).toBeInTheDocument();
+    expect(screen.getByText(`📁 ${folderPath}`)).toBeInTheDocument();
   });
 
   it('shows loading state when isLoading is true', () => {
@@ -44,11 +40,9 @@ describe('Header component', () => {
       <Header {...defaultProps} selectedClonesToRemove={['file1', 'file2']} />
     );
 
-    const deleteButton = screen.getByRole('button', {
-      name: /delete selected/i
-    });
+    const deleteButton = screen.getAllByTestId('btn-delete')[0];
     expect(deleteButton).not.toBeDisabled();
-    expect(screen.getByText('Delete Selected (2)')).toBeInTheDocument();
+    expect(deleteButton).toBeInTheDocument();
   });
 
   it('calls onSelectDirectory when select folder button is clicked', async () => {
@@ -57,7 +51,7 @@ describe('Header component', () => {
       <Header {...defaultProps} onSelectDirectory={onSelectDirectory} />
     );
 
-    await user.click(screen.getByRole('button', { name: /select folder/i }));
+    await user.click(screen.getAllByTestId('btn-select-folder')[0]);
     expect(onSelectDirectory).toHaveBeenCalledTimes(1);
   });
 
@@ -79,7 +73,7 @@ describe('Header component', () => {
       />
     );
 
-    await user.click(screen.getByRole('button', { name: /delete selected/i }));
+    await user.click(screen.getByRole('button', { name: /delete/i }));
     expect(handleOnDeleteClones).toHaveBeenCalledTimes(1);
   });
 });

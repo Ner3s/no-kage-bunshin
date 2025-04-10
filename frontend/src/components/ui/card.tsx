@@ -51,7 +51,7 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
         <div className="flex justify-between rounded-l-2xl rounded-r-2xl rounded-b-none bg-orange-50 p-4">
           <h4 className="flex items-center text-lg font-bold">
             <Icon.Component color={Icon.color} />
-            <span className="ml-2">
+            <span className="ml-2 select-auto">
               {original?.filename} {handleCopyText(duplicate.length)}
             </span>
           </h4>
@@ -78,14 +78,16 @@ function Card({ original, duplicate, callbackClones, hash }: CardProps) {
                     handleSelect(index);
                   }}
                 />
-                <div className="ml-2 flex w-full justify-between">
+                <div className="ml-2 flex w-full justify-between select-auto">
                   <span className="font-bold text-ellipsis">
                     {file.filename}
                   </span>
                   <span>{file.humanSize}</span>
                 </div>
               </div>
-              <span className="truncate text-ellipsis">{file.path}</span>
+              <span className="truncate text-ellipsis select-auto">
+                {file.path}
+              </span>
             </div>
           ))}
         </div>
