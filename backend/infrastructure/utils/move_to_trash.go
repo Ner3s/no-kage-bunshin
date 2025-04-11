@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"syscall"
 )
 
 func MoveToTrash(filePath string) error {
@@ -31,6 +32,9 @@ func MoveToTrash(filePath string) error {
 'OnlyErrorDialogs',
 'SendToRecycleBin')`
 		cmd := exec.Command("powershell", "-Command", script)
+		cmd.SysProcAttr = &syscall.SysProcAttr{
+			HideWindow: true,
+		}
 		return cmd.Run()
 
 	default:
