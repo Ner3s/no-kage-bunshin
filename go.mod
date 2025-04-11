@@ -1,4 +1,4 @@
-module clone-detect
+module no-kage-bunshin
 
 go 1.23
 

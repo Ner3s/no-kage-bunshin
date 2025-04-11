@@ -17,9 +17,9 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "clone-detect",
-		Width:  800,
-		Height: 600,
+		Title:  "No Kage Bunshin",
+		Width:  1280,
+		Height: 720,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
